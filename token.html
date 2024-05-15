@@ -1,78 +1,167 @@
 <html>
-    <head>
-        <style>
-            iframe {
-                width: 100%;
-                height: 100%;
-                border: 0;
-            }
-            .d1 {
-                width: 100%;
-                height: 86px;
-                display: flex;
-                background-color: #f5f4f3;
-            }
-            img {
-                padding-left: 2em;
-            }
-            h2 {
-                padding-top: 0.3em;
-                padding-left: 0.4em;
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            .d2 {
-                width: 309px;
-                height: 100%;
-                background-color: white;
-            }
-            li {
-                padding-left: 0em !important;
-                padding: 0.8em;
-                list-style: none;
-                font-size: 18px;
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            .d3 {
-                width: 100%;
-                height: 100%;
-            }
-            .d-flex {
-                display: flex;
-                flex-direction: row;
-                height: 90%;
-            }
-        </style>
-    </head>
-    <body>
+
+<head>
+    <title>Single channel - Token</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/20386770/pexels-photo-20386770/free-photo-of-a-photo-of-a-forest-with-fog-and-trees.jpeg");
+            background-position: center;
+            display: grid;
+            place-items: center;
+            font-size: 18px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-width: 25rem;
+        }
+
+        div {
+            padding: 0.8rem;
+        }
+
+        :root {
+            --arrow-bg: rgba(255, 255, 255, 0.3);
+            --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+            --option-bg: white;
+            --select-bg: rgba(255, 255, 255, 0.2);
+        }
+
+        select {
+            appearance: none;
+            outline: 0;
+            width: 10rem;
+            padding: 0.3rem;
+            background: var(--arrow-icon) no-repeat right 0.8em center / 1.4em,
+                linear-gradient(to left, var(--arrow-bg) 3em, transparent 3em);
+            border-radius: 0.25em;
+            box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            font-size: 15px;
+            align-self: center;
+
+        }
+
+        button {
+            border: 0;
+            width: 10rem;
+            padding: 0.8rem;
+            background: linear-gradient(to left, var(--select-bg) 3em, var(--select-bg) 3em);
+            border-radius: 0.25em;
+            align-self: center;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 17px;
+        }
+
+        input,
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            background-color: transparent;
+        }
+
+        textarea {
+            font-size: 12px;
+            min-height: 25rem;
+        }
+
+        select,
+        button,
+        input,
+        textarea {
+            border-bottom: 2px solid #ccc;
+            border-right: 2px solid #ccc;
+            box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            align-self: center;
+        }
+
+        .d1 {
+            padding-bottom: 0.3rem;
+        }
+    </style>
+    <script>
+        var url, id;
+
+        $(document).ready(function () {
+            $('select').on('change', function () {
+                switch (this.value) {
+                    case 'dev':
+                        url = 'https://console.dev-shoprz.live';
+                        id = 'a3249411-700a-4849-95a6-af879a702851';
+                        break;
+                    case 'stg':
+                        url = 'https://console.demo-shoprz.live';
+                        id = '';
+                        break;
+                    case 'prod':
+                        url = 'https://console.vimmi.net';
+                        id = '';
+                        break;
+                }
+
+                $('#domain').val(url);
+                $('#vp').val(id);
+
+            });
+
+            $('button').click(function () {
+                const token = $('#token').val();
+                const res = `${url}/?vp_id=${id}&access_token=${token}`;
+                if (token !== '') {
+                    window.location.href = `https://goodflo-99.github.io/single-channel/token-studio.html?url=${res}`;
+                }
+
+            });
+
+            $('#domain').on('change', function () {
+                url = $(this).val();
+            })
+
+            $('#vp').on('change', function () {
+                id = $(this).val();
+            })
+
+            $('select').val('dev').trigger('change');
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
         <div class="d1">
-            <img src="https://i.ibb.co/F7Msf7j/images-removebg-preview.png" height="75px">
-            <h2>Single channel</h2>
+            <span style="padding-right: 3rem;">Environment</span>
+            <select name="env" id="envs">
+                <option value="dev">DEV</option>
+                <option value="stg">STG</option>
+                <option value="prod">PROD</option>
+            </select>
         </div>
-        <div class="d-flex">
-            <div class="d2">
-                <ul>
-                    <li>Home</li>
-                    <li>Orders</li>
-                    <li>Products</li>
-                    <li>Promotions</li>
-                    <li>Memberships</li>
-                    <li>Site design</li>
-                    <li>Analytics</li>
-                    <li>Apps</li>
-                    <li>Settings</li>
-                    <li><b><u>Vimmi Studio</u></b></li>
-                </ul>
-            </div>
-            <div class="d3">
-                <iframe src="https://console.dev-shoprz.live/?vp_id=a3249411-700a-4849-95a6-af879a702851&access_token=eyJraWQiOiJmR0NJaktoMUw5Nyt6Y1NUWjFTamVTeDlneFJNRVpaSkh3cGVHWU4zWWhzPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIxMzc0YTg1Mi0zMGUxLTcwZDktOWM3Yy1iNjhlNjA1ZmE5MWIiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtY2VudHJhbC0xLmFtYXpvbmF3cy5jb21cL2V1LWNlbnRyYWwtMV96cm1GaXo4a1YiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiIxcjBlcHEzdGdqNnMwb28xbTlzaHZxN3B2NSIsIm9yaWdpbl9qdGkiOiJhMzc3N2Y0ZS0xOWE2LTQ0ODktYjdmZi1jNTgzODgxMDQ5YWUiLCJldmVudF9pZCI6ImNiOTlmZTJhLWY2MTktNGZkNS05OWIyLWEwNTQ1OTQzYjJkNCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoic2hvcHJ6XC9EYXRhUHJpdmFjeSBzaG9wcnpcL0FjY291bnRzIHNob3ByelwvUHJvZHVjdHMgb3BlbmlkIHNob3ByelwvTGl2ZVNob3duIGVtYWlsIiwiYXV0aF90aW1lIjoxNzE1Njk4OTY5LCJleHAiOjE3MTU3ODUzNjksImlhdCI6MTcxNTY5ODk2OSwianRpIjoiZTc3NjlmMmItZTAwMy00MTEwLWFiNjEtYjRjY2Y5ZDk0OWQ2IiwidXNlcm5hbWUiOiIxMzc0YTg1Mi0zMGUxLTcwZDktOWM3Yy1iNjhlNjA1ZmE5MWIifQ.hxqqf1GfBTyNSz8MSXgNlF3Nrl9UtHffBAPeNlW6UaozI2nRxIcJ0vkkezt3de2K5OUN2KakXoOx0o4gNxl08uRMSDbWID1tvzLZ7_yAyveo-Nqbv58kD8-IPJr_RTOhAEqXdE6VshsKX_cPTDamhufFrkIMwM1svnosRoL2kPH6-B_4-d_-wllP_HPCW3Ev_N10iZ5xalVkJckOgDrOS5AmcjhvJWn2sQHDAzuowVa9rXREwemyNcAjkMfCvSTyNNVxcICXFzFENw8RBJ9K2zv1XL0FCMNaso1O6_-91TLtnaZGgGW5NSrc27soIRTAAbLF113vikzWinHpzDNtfg"
-                    id="vimmi-studio"
-                    allow="display-capture *;camera *;microphone *;fullscreen;clipboard-read; clipboard-write"
-                    allowfullscreen=""
-                    frameborder="0"
-                    sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-                </iframe>
-            </div>
+        <div>
+            <input id="domain" type="url" placeholder="Environment domain">
         </div>
-        
-    </body>
+        <div>
+            <span>Vimmi partner ID <i>(vp_id)</i></span>
+            <input id="vp" type="text" placeholder="Vimmi partner ID">
+        </div>
+        <div>
+            <span>Access token</span><br>
+            <textarea id="token"></textarea>
+        </div>
+        <div class="btn">
+            <button>Open Studio</button>
+        </div>
+    </div>
+</body>
+
 </html>
